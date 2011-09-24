@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2011, IBM Corporation
 
-// also update process.version in lumpgap.js
+# also update process.version in lumpgap.js
 NODE_VERSION = v0.4.12
 NODE_URL     = https://raw.github.com/joyent/node
 NODE_LIB     = test/modules/node_modules

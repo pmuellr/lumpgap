@@ -17,15 +17,15 @@ PhoneGap.addLumpGapFileMap({
     }, 
     "node_modules/events.js": {
         "size": 6231, 
-        "mtime": "2011-09-24T15:03:46Z"
+        "mtime": "2011-09-24T17:45:18Z"
     }, 
     "node_modules/string_decoder.js": {
         "size": 3726, 
-        "mtime": "2011-09-24T15:03:47Z"
+        "mtime": "2011-09-24T17:45:19Z"
     }, 
     "events/all-tests.js": {
-        "size": 510, 
-        "mtime": "2011-09-24T14:50:35Z"
+        "size": 646, 
+        "mtime": "2011-09-24T16:13:55Z"
     }, 
     "require/package_json/all-tests.js": {
         "size": 300, 
@@ -37,11 +37,11 @@ PhoneGap.addLumpGapFileMap({
     }, 
     "node_modules/path.js": {
         "size": 8741, 
-        "mtime": "2011-09-24T15:03:47Z"
+        "mtime": "2011-09-24T17:45:18Z"
     }, 
     "require/dotFiles/test-01/bar.js": {
-        "size": 309, 
-        "mtime": "2011-09-24T13:34:30Z"
+        "size": 333, 
+        "mtime": "2011-09-24T16:51:36Z"
     }, 
     "require/node_modules_/test-01/a/node_modules/foo_b_nm.js": {
         "size": 407, 
@@ -49,7 +49,7 @@ PhoneGap.addLumpGapFileMap({
     }, 
     "node_modules/url.js": {
         "size": 16494, 
-        "mtime": "2011-09-24T15:03:47Z"
+        "mtime": "2011-09-24T17:45:19Z"
     }, 
     "require/node_modules_/test-02/node_modules/bar.js": {
         "size": 261, 
@@ -69,11 +69,11 @@ PhoneGap.addLumpGapFileMap({
     }, 
     "node_modules/assert.js": {
         "size": 10241, 
-        "mtime": "2011-09-24T15:03:46Z"
+        "mtime": "2011-09-24T17:45:17Z"
     }, 
     "node_modules/stream.js": {
         "size": 4092, 
-        "mtime": "2011-09-24T15:03:47Z"
+        "mtime": "2011-09-24T17:45:18Z"
     }, 
     "require/node_modules_/test-01/a/foo_a.js": {
         "size": 247, 
@@ -81,7 +81,7 @@ PhoneGap.addLumpGapFileMap({
     }, 
     "events/fromNode/test-event-emitter-remove-listeners.js": {
         "size": 1973, 
-        "mtime": "2011-09-24T15:03:49Z"
+        "mtime": "2011-09-24T17:45:21Z"
     }, 
     "require/package_json/test-01/a/b/foo/package.json": {
         "size": 25, 
@@ -89,11 +89,11 @@ PhoneGap.addLumpGapFileMap({
     }, 
     "events/fromNode/test-event-emitter-modify-in-emit.js": {
         "size": 2672, 
-        "mtime": "2011-09-24T15:03:48Z"
+        "mtime": "2011-09-24T17:45:20Z"
     }, 
     "tester.js": {
-        "size": 1955, 
-        "mtime": "2011-09-24T11:10:59Z"
+        "size": 2266, 
+        "mtime": "2011-09-24T16:18:05Z"
     }, 
     "require/node_modules_/test-01/a/b/foo_b.js": {
         "size": 286, 
@@ -105,15 +105,15 @@ PhoneGap.addLumpGapFileMap({
     }, 
     "events/fromNode/test-event-emitter-once.js": {
         "size": 1716, 
-        "mtime": "2011-09-24T15:03:49Z"
+        "mtime": "2011-09-24T17:45:20Z"
     }, 
     "events/fromNode/test-event-emitter-num-args.js": {
         "size": 1767, 
-        "mtime": "2011-09-24T15:03:49Z"
+        "mtime": "2011-09-24T17:45:20Z"
     }, 
     "node_modules/util.js": {
         "size": 12306, 
-        "mtime": "2011-09-24T15:03:48Z"
+        "mtime": "2011-09-24T17:45:19Z"
     }, 
     "require/node_modules_/test-01/a/b/c/foo_c.js": {
         "size": 306, 
@@ -125,15 +125,15 @@ PhoneGap.addLumpGapFileMap({
     }, 
     "node_modules/buffer.js": {
         "size": 10052, 
-        "mtime": "2011-09-24T15:03:46Z"
+        "mtime": "2011-09-24T17:45:17Z"
     }, 
     "require/package_json/test-01/test.js": {
         "size": 365, 
         "mtime": "2011-09-24T14:16:40Z"
     }, 
     "require/dotFiles/test-01/a/foo.js": {
-        "size": 265, 
-        "mtime": "2011-09-24T13:33:13Z"
+        "size": 327, 
+        "mtime": "2011-09-24T16:51:44Z"
     }, 
     "require/package_json/test-01/a/bar/bar.js": {
         "size": 264, 
@@ -141,7 +141,7 @@ PhoneGap.addLumpGapFileMap({
     }, 
     "events/fromNode/test-event-emitter-add-listeners.js": {
         "size": 1914, 
-        "mtime": "2011-09-24T15:03:48Z"
+        "mtime": "2011-09-24T17:45:20Z"
     }, 
     "all-tests.js": {
         "size": 692, 
@@ -153,15 +153,15 @@ PhoneGap.addLumpGapFileMap({
     }, 
     "node_modules/freelist.js": {
         "size": 1756, 
-        "mtime": "2011-09-24T15:03:47Z"
+        "mtime": "2011-09-24T17:45:18Z"
     }, 
     "require/dotFiles/test-01/a/b/foo.js": {
-        "size": 306, 
-        "mtime": "2011-09-24T13:33:44Z"
+        "size": 334, 
+        "mtime": "2011-09-24T16:52:02Z"
     }, 
     "node_modules/_linklist.js": {
         "size": 2151, 
-        "mtime": "2011-09-24T15:03:46Z"
+        "mtime": "2011-09-24T17:45:17Z"
     }, 
     "require/node_modules_/test-01/a/b/c/node_modules/foo_c_nm.js": {
         "size": 407, 
@@ -176,8 +176,8 @@ PhoneGap.addLumpGapFileMap({
         "mtime": "2011-09-24T13:47:20Z"
     }, 
     "require/dotFiles/test-01/foo.js": {
-        "size": 309, 
-        "mtime": "2011-09-24T13:34:37Z"
+        "size": 333, 
+        "mtime": "2011-09-24T16:51:25Z"
     }, 
     "require/package_json/test-01/a/bar/foo.js": {
         "size": 264, 
@@ -189,6 +189,6 @@ PhoneGap.addLumpGapFileMap({
     }, 
     "events/fromNode/test-event-emitter-check-listener-leaks.js": {
         "size": 715, 
-        "mtime": "2011-09-24T15:03:48Z"
+        "mtime": "2011-09-24T17:45:20Z"
     }
 })
