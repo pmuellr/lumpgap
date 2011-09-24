@@ -5,6 +5,13 @@
  * Copyright (c) 2011, IBM Corporation
  */
 
+var consoleElement
+
+//------------------------------------------------------------------------------
+function consoleLog(message) {
+    consoleElement.innerText += message + "\n"
+}
+
 //------------------------------------------------------------------------------
 function onLoad() {
     if (!window.PhoneGap) {
@@ -22,6 +29,9 @@ function onLoad() {
 
 //------------------------------------------------------------------------------
 function onDeviceReady() {
+    consoleElement = document.getElementById("console")
+    console.log = consoleLog
+
     LumpGap.onReady(onLumpGapReady)
 }
 
@@ -29,5 +39,5 @@ function onDeviceReady() {
 function onLumpGapReady(require) {
     setTimeout(function(){
         require("test-01/program")
-    }, 100)
+    }, 1)
 }

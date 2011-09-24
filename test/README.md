@@ -23,10 +23,9 @@ Running the tests in PhoneGap
 where (plugin files)
 * copy all the files in the `test` directory into your `www` folder in Xcode,
 after you add the `www` folder to your project.
+* rename `index-phonegap.html` to `index.html`
 * build and run
-* the tests display nothing in the browser window, only write the same
-stuff they write in the Node tests to the console.  Look in the Xcode
-console for the messages.
+* the tests display results in the browser window
 
 Running the tests in Node
 -------------------------
@@ -40,20 +39,13 @@ Running the tests in a desktop browser
 
 You will probably need to access the tests from an `http:` URL, as
 opposed to a `file:` URL, due to the totally evil usage of **sync XHR**
-(gasp!).  You will want to arrange to open the `test/index.html` file
-from the browser to run the tests.  The tests display nothing in the browser
-window, only write the same stuff they write in the Node tests to the
-debug console.  Open your debugger to see the messages.
+(gasp!).  You will want to arrange to open the `test/index-desktop.html` file
+from the browser to run the tests.  The the tests display results in the browser window
 
-Updating index.json
--------------------
 
-The file `index.json` is needed for the browser version of the tests; it
+Updating `test/lumpgap-file-map.js`
+--------------------------------
+
+The file `test/lumpgap/file-map.js` is needed for the browser version of the tests; it
 supplies the file names in the module directory that a PhoneGap native
-supplies.  To regenerate the guts, run:
-
-    cd test/modules; find . -type f | sed "s/^..\(.*\)/\"\1\": {},/"
-
-and paste the results as the body of the JSON file, remembering to
-remove the final `,` from the last entry.
-
+supplies.  To regenerate it, run `make update-file-map`.
