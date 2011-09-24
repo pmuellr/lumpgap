@@ -5,9 +5,11 @@
  * Copyright (c) 2011, IBM Corporation
  */
 
+//----------------------------------------------------------------------------
 exports.totalTests  = 0
 exports.failedTests = 0
 
+//----------------------------------------------------------------------------
 exports.report = function report() {
     console.log("")
     console.log("--------------------------------------------------------")
@@ -22,16 +24,21 @@ exports.report = function report() {
     console.log("--------------------------------------------------------")
 }
 
-exports.test = function test(exps) {
-    if (exps == null) return
+//----------------------------------------------------------------------------
+exports.test = function test(name, exps) {
+    if (null == exps) {
+        exps = name
+        name = exps.id
+    }
+    if (null == exps) return
 
     var unnamed = false
-    if (!exps.id) {
-        exps.id = "<unnamed>"
+    if (!name) {
+        name = "<unnamed module>"
         unnamed = true
     }
 
-    console.log("running tests " + exps.id)
+    console.log("running tests " + name)
 
     if (typeof(exps.setUp) == "function") {
         exports.totalTests++
@@ -54,7 +61,7 @@ exports.test = function test(exps) {
         exports.totalTests++
 
         if (unnamed) {
-            console.log("running test  " + exps.id + "." + key + "()")
+            console.log("running test  " + name + "." + key + "()")
         }
 
         try {

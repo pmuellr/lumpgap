@@ -5,7 +5,7 @@
  * Copyright (c) 2011, IBM Corporation
  */
 
-exports.id = module.id
+exports.id = "require/dotFiles/test-01/a/b/foo.js"
 
 require("../foo")
 require("../../foo")

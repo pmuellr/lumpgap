@@ -29,13 +29,6 @@ We don't know.  We talk a lot.  Time to write some code.
 what does it do?
 ===============
 
-Not much, yet.  Really, not very much at all.
-
-LumpGap provides plugin(s) which extend the JavaScript runtime in PhoneGap
-with some things you will recognize from Node.js.
-
-A complete example is provided in the `test` directory
-
 require()
 ---------
 See [Node's documentation on Modules](http://nodejs.org/docs/v0.4.12/api/modules.html).
@@ -60,12 +53,12 @@ Most of this is untested right now.  Simple cases appear to work.
 EventEmitter
 ------------
 
-TBD
+The events.EventEmitter class is passing some of the tests that node ships.
 
 what else
 ---------
 
-????
+Other bits are limping.  Let it be known what isn't!
 
 running
 =======
@@ -104,6 +97,11 @@ file, add a new plugin entry in the `Plugins` dictionary:
  * key: `com.phonegap.lumpgap`
  * value: `PGLumpGap`
 * start dropping modules into `www/modules`
+
+If you'd like to use some of the "core" packages in node, you can see how that
+was done for the tests, looking at the `get-node-modules` task in the `Makefile`.
+
+Currently, assert and event seem to be working.
 
 testing
 =======

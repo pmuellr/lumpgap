@@ -351,6 +351,8 @@ function onReady(callback) {
 function getFileMapSuccess(fileMap) {
     FileMap  = fileMap
 
+    fixUpsNodeLate()
+
     onReadyCalled = true
     var callbacks = onReadyCallbacks.slice()
     for (var i=0; i<callbacks.length; i++) {
@@ -390,19 +392,111 @@ window.LumpGap = {
     onReady: onReady
 }
 
-//-------------------------------------------------------------------
-// node add-ons
-//-------------------------------------------------------------------
-window.global = window
-global.process = {}
-process.EventEmitter = function() {}
+fixUpsNodeEarly()
 
-if (typeof(Array.isArray) != "function") {
-    Array.isArray = function() {
-        if (typeof(this.length) == "number") {
-            return true
+//-------------------------------------------------------------------
+// node fixups 1
+//-------------------------------------------------------------------
+function fixUpsNodeEarly() {
+
+    var process = {}
+
+    // globals
+    window.global = window
+    global.process = process
+
+    process.argv          = []
+    process.execPath      = location.href
+    process.chdir         = function() {throw "process.chdir() not supported"}
+    process.cwd           = function() {return process.execPath}
+    process.env           = {}
+    process.exit          = function() {throw "process.exit()"}
+    process.version       = "v0.4.12"
+    process.versionimpl   = VERSION
+    process.installPrefix = ""
+    process.pid           = function() {return 0}
+    process.title         = location.href
+    process.memoryUsage   = function() {return 0}
+    process.nextTick      = function(fun) {setTimeout(fun, 0)}
+    process.umask         = function() { return 0644 }
+
+    // needed for assert.js _deepEqual()
+    global.Buffer = {}
+    Buffer.isBuffer = function() { return false }
+
+    // needed for events.js
+    process.EventEmitter = function() {}
+    process.__proto__ = process.EventEmitter.prototype
+
+    // needed for events.js
+    if (typeof(Array.isArray) != "function") {
+        Array.isArray = function() {
+            if (typeof(this.length) == "number") {
+                return true
+            }
+            return false
         }
-        return false
+    }
+
+    // hack the process binding stuff
+    process.binding = function process_binding(key, val) {
+        if (!process.__binding) process.__binding = {}
+
+        if (val) {
+            process.__binding[key] = val
+            return
+        }
+
+        if (!process.__binding[key]) {
+            console.log("someone looking up process.binding('" + key + "')")
+        }
+
+        return process.__binding[key]
+    }
+}
+
+//-------------------------------------------------------------------
+// node fixups 2
+//-------------------------------------------------------------------
+function fixUpsNodeLate() {
+    var process = global.process
+
+    // set the process.platform
+    process.platform = navigator.device.platform
+
+    // any missing console stuff; assumes console.log() exists
+    if (!console.info)  console.info  = function() {console.log.apply(console,arguments)}
+    if (!console.warn)  console.warn  = function() {console.log.apply(console,arguments)}
+    if (!console.error) console.error = function() {console.log.apply(console,arguments)}
+    if (!console.dir)   console.dir   = function() {console.log.apply(console,arguments)}
+
+    if (!console.trace) console.trace   = function() {
+        console.log("console.trace() not yet supported")
+    }
+
+    if (!console.assert) console.assert = function(val, message) {
+        if (val) return
+        if (!message) message = "assertion failed: " + val + " != true"
+        console.log(message)
+        throw message
+    }
+
+    var consoleTimers = {}
+
+    if (!console.time) console.time = function(label) {
+        var time = new Date().valueOf()
+        consoleTimers[label] = time
+    }
+
+    if (!console.timeEnd) console.timeEnd = function(label) {
+        var time = consoleTimers[label]
+        if (!time) {
+            console.log(label + ": NaNms") // heh
+            return
+        }
+
+        time = new Date().valueOf() - time
+        console.log(label + ": " + time + "ms")
     }
 }
 

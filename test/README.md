@@ -15,6 +15,10 @@ desktop browser runs much of the same machinery as the PhoneGap version
 of the code, so running these tests with a good browser debugger is
 good way to debug issues in the guts of LumpGap.
 
+**Important:**
+
+Before running the tests, run `make get-node-modules`.
+
 Running the tests in PhoneGap
 -----------------------------
 
@@ -26,6 +30,15 @@ after you add the `www` folder to your project.
 * rename `index-phonegap.html` to `index.html`
 * build and run
 * the tests display results in the browser window
+* ignore all the goop in the text display; the only important thing is to see
+that all the tests passed, which is noted in the final lines of the text display.
+
+If you are planning on running the tests all the time, and you can live with
+the project structure I set up for my personal test project, you can use the
+`write-makefile-ios` task in the `Makefile` to write a Makefile to use in your
+Xcode project.  This generates a `Makefile` that you should put in your Xcode
+project, then run `make watch` to have the files copied from this project
+into your Xcode project, as they are changed.
 
 Running the tests in Node
 -------------------------

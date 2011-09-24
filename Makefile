@@ -3,6 +3,7 @@
 #
 # Copyright (c) 2011, IBM Corporation
 
+// also update process.version in lumpgap.js
 NODE_VERSION = v0.4.12
 NODE_URL     = https://raw.github.com/joyent/node
 NODE_LIB     = test/modules/node_modules
@@ -32,15 +33,23 @@ write-makefile-ios: get-tools
 
 #-------------------------------------------------------------------------------
 get-node-modules:
-	curl $(NODE_URL)/$(NODE_VERSION)/lib/_linklist.js > $(NODE_LIB)/_linklist.js
-	curl $(NODE_URL)/$(NODE_VERSION)/lib/assert.js > $(NODE_LIB)/assert.js
-	curl $(NODE_URL)/$(NODE_VERSION)/lib/events.js > $(NODE_LIB)/events.js
-	curl $(NODE_URL)/$(NODE_VERSION)/lib/freelist.js > $(NODE_LIB)/freelist.js
-	curl $(NODE_URL)/$(NODE_VERSION)/lib/path.js > $(NODE_LIB)/path.js
-	curl $(NODE_URL)/$(NODE_VERSION)/lib/stream.js > $(NODE_LIB)/stream.js
-	curl $(NODE_URL)/$(NODE_VERSION)/lib/string_decoder.js > $(NODE_LIB)/string_decoder.js
-	curl $(NODE_URL)/$(NODE_VERSION)/lib/url.js > $(NODE_LIB)/url.js
-	curl $(NODE_URL)/$(NODE_VERSION)/lib/util.js > $(NODE_LIB)/util.js
+	curl $(NODE_URL)/$(NODE_VERSION)/lib/_linklist.js      > test/modules/node_modules/_linklist.js
+	curl $(NODE_URL)/$(NODE_VERSION)/lib/assert.js         > test/modules/node_modules/assert.js
+	curl $(NODE_URL)/$(NODE_VERSION)/lib/buffer.js         > test/modules/node_modules/buffer.js
+	curl $(NODE_URL)/$(NODE_VERSION)/lib/events.js         > test/modules/node_modules/events.js
+	curl $(NODE_URL)/$(NODE_VERSION)/lib/freelist.js       > test/modules/node_modules/freelist.js
+	curl $(NODE_URL)/$(NODE_VERSION)/lib/path.js           > test/modules/node_modules/path.js
+	curl $(NODE_URL)/$(NODE_VERSION)/lib/stream.js         > test/modules/node_modules/stream.js
+	curl $(NODE_URL)/$(NODE_VERSION)/lib/string_decoder.js > test/modules/node_modules/string_decoder.js
+	curl $(NODE_URL)/$(NODE_VERSION)/lib/url.js            > test/modules/node_modules/url.js
+	curl $(NODE_URL)/$(NODE_VERSION)/lib/util.js           > test/modules/node_modules/util.js
+
+	curl $(NODE_URL)/$(NODE_VERSION)/test/simple/test-event-emitter-add-listeners.js        > test/modules/events/fromNode/test-event-emitter-add-listeners.js
+	curl $(NODE_URL)/$(NODE_VERSION)/test/simple/test-event-emitter-check-listener-leaks.js > test/modules/events/fromNode/test-event-emitter-check-listener-leaks.js
+	curl $(NODE_URL)/$(NODE_VERSION)/test/simple/test-event-emitter-modify-in-emit.js       > test/modules/events/fromNode/test-event-emitter-modify-in-emit.js
+	curl $(NODE_URL)/$(NODE_VERSION)/test/simple/test-event-emitter-num-args.js             > test/modules/events/fromNode/test-event-emitter-num-args.js
+	curl $(NODE_URL)/$(NODE_VERSION)/test/simple/test-event-emitter-once.js                 > test/modules/events/fromNode/test-event-emitter-once.js
+	curl $(NODE_URL)/$(NODE_VERSION)/test/simple/test-event-emitter-remove-listeners.js     > test/modules/events/fromNode/test-event-emitter-remove-listeners.js
 
 #-------------------------------------------------------------------------------
 get-tools: \

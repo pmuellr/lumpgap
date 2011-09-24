@@ -4,9 +4,3 @@
  *
  * Copyright (c) 2011, IBM Corporation
  */
-
-exports.id = "require/dotFiles/test-01/foo.js"
-
-require("./bar")
-require("./a/foo.js")
-require("./a/b/foo.js")

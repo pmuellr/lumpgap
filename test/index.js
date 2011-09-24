@@ -6,18 +6,22 @@
  */
 
 var consoleElement
+var oldConsoleLog
 
 LumpGap.onReady(onLumpGapReady)
 
 //------------------------------------------------------------------------------
-function consoleLog(message) {
+function newConsoleLog(message) {
+    oldConsoleLog.call(console,message)
     consoleElement.innerText += message + "\n"
 }
 
 //------------------------------------------------------------------------------
 function onLumpGapReady(require) {
     consoleElement = document.getElementById("console")
-    console.log = consoleLog
+
+    oldConsoleLog = console.log
+    console.log = newConsoleLog
 
     setTimeout(function(){
         require("./all-tests")
