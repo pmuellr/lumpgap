@@ -14,6 +14,11 @@ var PROGRAM = "LumpGap"
 var VERSION = "0.1.0"
 
 //-------------------------------------------------------------------
+// node globals
+//-------------------------------------------------------------------
+
+
+//-------------------------------------------------------------------
 if (PhoneGap.hasResource(PROGRAM)) return
 PhoneGap.addResource(PROGRAM)
 
@@ -51,10 +56,18 @@ function moduleExists(moduleId) {
 function getFileAsText(fileName) {
     var timeStart = Date.now()
 
-    var url = "modules/" + fileName + "?" + timeStart
+    var urlBase = "modules/" + fileName
+    var url     = urlBase + "?" + timeStart
+
     var xhr = new XMLHttpRequest()
     xhr.open("get", url, false)
     xhr.send()
+
+    if ((xhr.status != 0) && (xhr.status != 200)) {
+        console.log("XHR error getting '" + urlBase + "': " + xhr.status + ": " + xhr.statusText)
+        return null
+    }
+
     var result = xhr.responseText
 
 //    var timeElapsed = Date.now() - timeStart
@@ -69,7 +82,7 @@ function getFileAsText(fileName) {
 //----------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------
-//var loadAsFile = debugWrapper(loadAsFile)
+// var loadAsFile = debugWrapper(loadAsFile)
 function loadAsFile(fileName) {
     if (fileExists(fileName)) return fileName
 
@@ -85,7 +98,7 @@ function loadAsFile(fileName) {
 }
 
 //----------------------------------------------------------------------------
-//var loadAsDirectory = debugWrapper(loadAsDirectory)
+// var loadAsDirectory = debugWrapper(loadAsDirectory)
 function loadAsDirectory(dirName) {
     var jsonFile = dirName + "/package.json"
     var pkg
@@ -120,18 +133,19 @@ function loadAsDirectory(dirName) {
 }
 
 //----------------------------------------------------------------------------
-//var loadNodeModules = debugWrapper(loadNodeModules)
+// var loadNodeModules = debugWrapper(loadNodeModules)
 function loadNodeModules(fileName, start) {
     var dirs = nodeModulesPaths(start)
 
     for (var i=0; i<dirs.length; i++) {
         var dir = dirs[i]
         var moduleId
+        var moduleName = normalize("", dir + "/" + fileName)
 
-        moduleId = loadAsFile(normalize("", dir + "/" + fileName))
+        moduleId = loadAsFile(moduleName)
         if (moduleId) return moduleId
 
-        moduleId = loadAsDirectory(normalize("", dir + "/" + fileName))
+        moduleId = loadAsDirectory(moduleName)
         if (moduleId) return moduleId
     }
 
@@ -139,30 +153,28 @@ function loadNodeModules(fileName, start) {
 }
 
 //----------------------------------------------------------------------------
-//var nodeModulesPaths = debugWrapper(nodeModulesPaths)
+// var nodeModulesPaths = debugWrapper(nodeModulesPaths)
 function nodeModulesPaths(start) {
-    var parts = start.split("/")
-    var root  = parts.indexOf("node_modules")
-    var i     = parts.length - 1
-    var dirs  = []
+    var result = []
+    var parts  = start.split("/")
 
-    if (root == -1) root = 0
+    for (var i=parts.length; i>=0; i--) {
+        if (parts[i-1] == "node_modules") continue
 
-    while (i > root) {
-        if (parts[i] == "node_modules") continue
-        dir = parts.slice(0,i).join("/") + "node_modules"
-        dirs.push(dir)
-        i--
+        var dir = parts.slice(0,i)
+        dir.push("node_modules")
+        dir = dir.join("/")
+
+        result.push(dir)
     }
 
-    if (dirs.length) return dirs
-    return ["."]
+    return result
 }
 
 //----------------------------------------------------------------------------
 // resolve the actual fileName
 //----------------------------------------------------------------------------
-//var resolve = debugWrapper(resolve)
+// var resolve = debugWrapper(resolve)
 function resolve(moduleName, path) {
     var moduleId
 
@@ -180,7 +192,7 @@ function resolve(moduleName, path) {
 
      moduleName = normalize("", moduleName)
 
-     moduleId = loadNodeModules(moduleName, getDirName(path))
+     moduleId = loadNodeModules(moduleName, path)
      if (moduleId) return moduleId
 
      return null
@@ -199,13 +211,17 @@ function getRequire(currentModule) {
         if (module) return module.exports
 
         var factorySource = getFileAsText(moduleId)
+        if (null == factorySource) {
+            error("source unavailable for module " + moduleId)
+        }
 
         if (moduleId.match(/\.coffee$/)) {
             var cs = require("coffee-script")
             factorySource = cs.compile(factorySource)
         }
 
-        factorySource = "(function(require,exports,module) {" + factorySource + "})"
+        factorySource = "(function(require,exports,module) {\n" + factorySource + "\n})"
+        factorySource += "\n//@ sourceURL=" + moduleId
 
         var factoryFunc
         try {
@@ -311,7 +327,9 @@ function log(message) {
     console.log(PROGRAM + ": " + message)
 }
 
-//-------------------------------------------------------------------
+//----------------------------------------------------------------------------
+// handle onReady callbacks
+//----------------------------------------------------------------------------
 var onReadyCalled    = false
 var onReadyCallbacks = []
 
@@ -327,6 +345,8 @@ function onReady(callback) {
     onReadyCallbacks.push(callback)
 }
 
+//-------------------------------------------------------------------
+// getting the filemap from the native
 //-------------------------------------------------------------------
 function getFileMapSuccess(fileMap) {
     FileMap  = fileMap
@@ -346,6 +366,8 @@ function getFileMapFailure(message) {
 }
 
 //-------------------------------------------------------------------
+// onReady handler
+//-------------------------------------------------------------------
 function onDeviceReady() {
     PhoneGap.exec(
         getFileMapSuccess,
@@ -353,18 +375,39 @@ function onDeviceReady() {
         "com.phonegap.lumpgap", "getFileMap", [])
 }
 
-if (PhoneGap.Fake) {
+if (PhoneGap.isLumpGapBrowserSimulator) {
     setTimeout(onDeviceReady,100)
 }
 else {
     document.addEventListener("deviceready", onDeviceReady, false);
 }
 
+//-------------------------------------------------------------------
+// the LumpGap global
+//-------------------------------------------------------------------
 window.LumpGap = {
     VERSION: VERSION,
     onReady: onReady
 }
 
+//-------------------------------------------------------------------
+// node add-ons
+//-------------------------------------------------------------------
+window.global = window
+global.process = {}
+process.EventEmitter = function() {}
+
+if (typeof(Array.isArray) != "function") {
+    Array.isArray = function() {
+        if (typeof(this.length) == "number") {
+            return true
+        }
+        return false
+    }
+}
+
+//-------------------------------------------------------------------
+// debug goodies
 //-------------------------------------------------------------------
 var debugWrapperIndent = ""
 function debugWrapper(func) {

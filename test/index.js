@@ -7,37 +7,19 @@
 
 var consoleElement
 
+LumpGap.onReady(onLumpGapReady)
+
 //------------------------------------------------------------------------------
 function consoleLog(message) {
     consoleElement.innerText += message + "\n"
 }
 
 //------------------------------------------------------------------------------
-function onLoad() {
-    if (!window.PhoneGap) {
-        console.log("PhoneGap not loaded")
-        return
-    }
-
-    if (PhoneGap.Fake) {
-        setTimeout(onDeviceReady,200)
-    }
-    else {
-        document.addEventListener("deviceready", onDeviceReady, false)
-    }
-}
-
-//------------------------------------------------------------------------------
-function onDeviceReady() {
+function onLumpGapReady(require) {
     consoleElement = document.getElementById("console")
     console.log = consoleLog
 
-    LumpGap.onReady(onLumpGapReady)
-}
-
-//------------------------------------------------------------------------------
-function onLumpGapReady(require) {
     setTimeout(function(){
-        require("test-01/program")
+        require("./all-tests")
     }, 1)
 }

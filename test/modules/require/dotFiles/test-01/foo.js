@@ -5,13 +5,8 @@
  * Copyright (c) 2011, IBM Corporation
  */
 
-console.log("in: " + module.id)
 exports.id = module.id
 
-var test = require('./test')
-
-var foo = require('./foo')
-var bar = require('./bar')
-
-//------------------------------------------------------------------------------
-test.print('DONE', 'info')
+require("./bar")
+require("./a/foo.js")
+require("./a/b/foo.js")

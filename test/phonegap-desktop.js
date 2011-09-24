@@ -13,11 +13,23 @@
 //----------------------------------------------------------------------------
 if (window.PhoneGap) return
 
-//----------------------------------------------------------------------------
 window.PhoneGap = {}
+PhoneGap.isLumpGapBrowserSimulator = true
 
 //----------------------------------------------------------------------------
-PhoneGap.Fake = true
+var device = {
+    platform:   "lumpgap-desktop-simulator",
+    name:       "lumpgap-desktop-simulator",
+    uuid:       "???uuid???",
+    gap:        "1.0.0",
+    version:    "1.0.0",
+    connection: {"type":"none"},
+}
+
+navigator.device = window.device = device
+
+//----------------------------------------------------------------------------
+PhoneGap.available = true
 
 //----------------------------------------------------------------------------
 PhoneGap.hasResource = function(pluginName) {
@@ -40,7 +52,7 @@ PhoneGap.exec = function(success, fail, pluginLongName, method, args) {
     fileMapName = "modules/file-map.json"
 
     if (method == "com.phonegap.lumpgap.getFileMap") {
-        setTimeout(function() {success(FileMap)}, 100)
+        setTimeout(function() {success(FileMap)}, 0)
     }
 
     else {

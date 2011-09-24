@@ -24,10 +24,6 @@ def main():
 
     log("copying source %s to target %s" % (source, target))
 
-    modulesDir = "%s/www/modules" % target
-    if os.path.exists(modulesDir):
-        shutil.rmtree(modulesDir)
-
     cpFiles = [
         [ "plugins/ios/lumpgap.js",   "www" ],
         [ "plugins/ios/PGLumpGap.m",  "%s/Plugins" % project],
@@ -41,9 +37,16 @@ def main():
             "%s/%s" % (target, cpFile[1])
         )
 
+    modulesDir = "%s/www/modules" % target
+
+    if os.path.exists(modulesDir):
+        shutil.rmtree(modulesDir)
+
+    os.mkdir(modulesDir)
+
     copyTree(
         "%s/test/modules" % source,
-        "%s/www" % target
+        "%s/www/modules" % target
     )
 
 #-------------------------------------------------------------------------------
