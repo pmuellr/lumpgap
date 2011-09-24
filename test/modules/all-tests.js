@@ -7,6 +7,13 @@
 
 var tester = require("./tester")
 
+try {
+    require("assert")
+}
+catch(e) {
+    console.log("--> It appears you don't have assert.js handy.")
+    console.log("--> There should be a task in the Makefile to get it from node.js")
+}
 require("./require/all-tests")
 
 tester.report()
