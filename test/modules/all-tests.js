@@ -15,9 +15,12 @@ catch(e) {
 }
 
 //------------------------------------------------------------------------------
+require("coffee-script")
+
 var tester = require("./tester")
 
 require("./require/all-tests")
 require("./events/all-tests")
+require("./cs/all-tests")
 
 tester.report()

@@ -42,18 +42,32 @@ that [npm](http://npmjs.org/) supports.  The differences will hopefully be minor
 * won't search paths above the `www/modules` directory
 * doesn't handle links
 
-It should eventually handle:
+It should handle:
 
 * `node_modules` directories
 * `main` properties in `package.json` files
 * most of Node's [module resolution algorithm](http://nodejs.org/docs/v0.4.12/api/modules.html#all_Together...)
 
-Most of this is untested right now.  Simple cases appear to work.
+Simple cases appear to work.
 
 EventEmitter
 ------------
 
 The events.EventEmitter class is passing some of the tests that node ships.
+
+CoffeeScript
+------------
+
+If you have the `coffee-script` package available in your `modules` directory,
+you can include `.coffee` modules without translating them to JavaScript.
+
+npm
+---
+
+To use npm to add modules to your project, you will want these to end up
+showing up in the `www/modules/node_modules` directory (for top level modules
+anyway).  To make this work with `npm install`, you may need to create the
+`node_modules` directory in `www/modules` before running a `npm install`.
 
 what else
 ---------

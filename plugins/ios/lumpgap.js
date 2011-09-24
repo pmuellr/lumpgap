@@ -204,6 +204,9 @@ function resolve(moduleName, path) {
 function getRequire(currentModule) {
     var result = function require(moduleName) {
 
+        var module = moduleExists(moduleName)
+        if (module) return module.exports
+
         var moduleId = resolve(moduleName, currentModule.dirName)
         if (null == moduleId) error("unable to resolve module '" + moduleName + "' from module: '" + currentModule.id + "'")
 
@@ -217,7 +220,14 @@ function getRequire(currentModule) {
 
         if (moduleId.match(/\.coffee$/)) {
             var cs = require("coffee-script")
-            factorySource = cs.compile(factorySource)
+            try {
+                factorySource = cs.compile(factorySource)
+            }
+            catch(e) {
+                var message = "error compiling coffeescript in '" + moduleId + "': " + e
+                console.log(message)
+                throw message
+            }
         }
 
         factorySource = "(function(require,exports,module) {\n" + factorySource + "\n})"
@@ -395,6 +405,15 @@ window.LumpGap = {
 fixUpsNodeEarly()
 
 //-------------------------------------------------------------------
+function getTBDfunction(name) {
+    return function() {
+        message = name + "() is not yet supported"
+        console.log(message)
+        throw message
+    }
+}
+
+//-------------------------------------------------------------------
 // node fixups 1
 //-------------------------------------------------------------------
 function fixUpsNodeEarly() {
@@ -452,6 +471,25 @@ function fixUpsNodeEarly() {
         }
 
         return process.__binding[key]
+    }
+
+    var fsMethods = [
+        "rename", "renameSync", "truncate", "truncateSync", "chown",
+        "chownSync", "fchown", "fchownSync", "lchown", "lchownSync",
+        "chmod", "chmodSync", "fchmod", "fchmodSync", "lchmod",
+        "lchmodSync", "stat", "lstat", "fstat", "statSync", "lstatSync",
+        "fstatSync", "link", "linkSync", "symlink", "symlinkSync",
+        "readlink", "readlinkSync", "realpath", "realpathSync",
+        "unlink", "unlinkSync", "rmdir", "rmdirSync", "mkdir",
+        "mkdirSync", "readdir", "readdirSync", "close", "closeSync",
+        "open", "openSync", "write", "writeSync", "writeSync", "read",
+        "readSync", "readSync", "readFile", "readFileSync", "writeFile",
+        "writeFileSync", "watchFile", "unwatchFile"
+    ]
+
+    fsModule = createModule("fs")
+    for (var i=0; i<fsMethods.length; i++) {
+        fsModule.exports[fsMethods[i]] = getTBDfunction(fsMethods[i])
     }
 }
 

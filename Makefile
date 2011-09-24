@@ -51,6 +51,8 @@ get-node-modules:
 	curl $(NODE_URL)/$(NODE_VERSION)/test/simple/test-event-emitter-once.js                 > test/modules/events/fromNode/test-event-emitter-once.js
 	curl $(NODE_URL)/$(NODE_VERSION)/test/simple/test-event-emitter-remove-listeners.js     > test/modules/events/fromNode/test-event-emitter-remove-listeners.js
 
+	cd test/modules; npm install coffee-script
+
 #-------------------------------------------------------------------------------
 get-tools: \
 	tools/run-when-changed.py
